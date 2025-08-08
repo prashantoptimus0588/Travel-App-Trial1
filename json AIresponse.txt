@@ -1,0 +1,635 @@
+id
+"1754130669054"
+(string)
+
+
+
+tripData
+(map)
+
+
+budget
+"Moderate"
+(string)
+
+
+currencyDisclaimer
+"All INR prices are estimates based on current exchange rates (approximately €1 = ₹90) and are subject to change."
+(string)
+
+
+duration
+"2 Days"
+(string)
+
+
+
+hotelOptions
+(array)
+
+
+
+0
+(map)
+
+
+Hotel address
+"Fonthill Road North, Liffey Valley, Dublin 22, Ireland"
+(string)
+
+
+HotelName
+"Clayton Hotel Liffey Valley"
+(string)
+
+
+Price in INR
+"₹9,000 - ₹15,000 (estimated per night, depends on season and availability)"
+(string)
+
+
+booking link
+"https://www.claytonhotelliffeyvalley.com/"
+(string)
+
+
+descriptions
+"A modern hotel located close to the M50 motorway, offering comfortable rooms, a restaurant, and a bar. Convenient for accessing Dublin city center and surrounding areas."
+(string)
+
+
+geo coordinates
+"53.3533, -6.3849"
+(string)
+
+
+hotel image URL
+"https://www.claytonhotelliffeyvalley.com/wp-content/uploads/2018/07/clayton-hotel-liffey-valley-exterior-1920x1080.jpg"
+(string)
+
+
+rating
+"4.0/5"
+(string)
+
+
+
+1
+(map)
+
+
+Hotel address
+"Newlands Cross, Dublin 22, Ireland"
+(string)
+
+
+HotelName
+"Maldron Hotel Newlands Cross"
+(string)
+
+
+Price in INR
+"₹8,000 - ₹14,000 (estimated per night, depends on season and availability)"
+(string)
+
+
+booking link
+"https://www.maldronhotelnewlandscross.com/"
+(string)
+
+
+descriptions
+"A contemporary hotel with easy access to the city center and major routes. Features comfortable rooms, a restaurant, and a gym."
+(string)
+
+
+geo coordinates
+"53.3274, -6.3976"
+(string)
+
+
+hotel image URL
+"https://www.maldronhotelnewlandscross.com/wp-content/uploads/sites/18/2022/02/Maldron-Hotel-Newlands-Cross-Exterior-scaled.jpg"
+(string)
+
+
+rating
+"4.1/5"
+(string)
+
+
+
+2
+(map)
+
+
+Hotel address
+"Naas Road, Dublin 22, Ireland"
+(string)
+
+
+HotelName
+"Louis Fitzgerald Hotel"
+(string)
+
+
+Price in INR
+"₹7,500 - ₹13,000 (estimated per night, depends on season and availability)"
+(string)
+
+
+booking link
+"https://www.louisfitzgeraldhotel.com/"
+(string)
+
+
+descriptions
+"A well-established hotel located on the Naas Road, offering comfortable accommodation, dining options, and event facilities. Convenient for accessing the city and surrounding areas."
+(string)
+
+
+geo coordinates
+"53.3297, -6.3559"
+(string)
+
+
+hotel image URL
+"https://www.louisfitzgeraldhotel.com/wp-content/uploads/2023/03/exterior-2.jpg"
+(string)
+
+
+rating
+"3.9/5"
+(string)
+
+
+
+itinerary
+(map)
+
+
+
+day1
+(array)
+
+
+(map)
+
+
+
+1
+(map)
+
+
+best time to visit
+"Morning or early afternoon"
+(string)
+
+
+duration
+"2-3 hours"
+(string)
+
+
+geo coordinates
+"53.3437, -6.2580"
+(string)
+
+
+place details
+"Visit Ireland's oldest university and see the famous Book of Kells manuscript."
+(string)
+
+
+place image URL
+"https://www.tcd.ie/library/manuscripts/assets/img/book-of-kells.jpg"
+(string)
+
+
+placeName
+"Trinity College & Book of Kells"
+(string)
+
+
+ticket pricing
+"€18-€25 (approximately ₹1,620 - ₹2,250) per adult"
+(string)
+
+
+time to travel from Guinness Storehouse
+"15-20 minutes (walking or public transport)"
+(string)
+
+
+
+2
+(map)
+
+
+best time to visit
+"Evening/Night"
+(string)
+
+
+duration
+"2-3 hours (or longer if enjoying nightlife)"
+(string)
+
+
+geo coordinates
+"53.3452, -6.2650"
+(string)
+
+
+place details
+"Experience Dublin's vibrant nightlife in the Temple Bar area with its pubs, restaurants, and live music."
+(string)
+
+
+place image URL
+"https://www.visitdublin.com/media/catalog/product/t/e/temple-bar-daytime_1.jpg?format=jpeg&quality=80&fit=cover&width=1333&height=1000"
+(string)
+
+
+placeName
+"Temple Bar"
+(string)
+
+
+ticket pricing
+"Free entry, cost depends on food and drinks consumed."
+(string)
+
+
+time to travel from Trinity College
+"5-10 minutes (walking)"
+(string)
+
+
+
+day2
+(array)
+
+
+
+0
+(map)
+
+
+best time to visit
+"Morning"
+(string)
+
+
+duration
+"2-3 hours"
+(string)
+
+
+geo coordinates
+"53.3449, -6.3173"
+(string)
+
+
+place details
+"Visit this historic prison and learn about Irish history and political struggles."
+(string)
+
+
+place image URL
+"https://heritageireland.ie/assets/uploads/2023/03/kilmainham-gaol-2.jpg"
+(string)
+
+
+placeName
+"Kilmainham Gaol"
+(string)
+
+
+ticket pricing
+"€8 (approximately ₹720) per adult (pre-booking highly recommended)"
+(string)
+
+
+time to travel from hotel
+"20-30 minutes (depending on hotel and traffic)"
+(string)
+
+
+
+1
+(map)
+
+
+best time to visit
+"Afternoon"
+(string)
+
+
+duration
+"1-2 hours"
+(string)
+
+
+geo coordinates
+"53.3419, -6.2723"
+(string)
+
+
+place details
+"Explore Ireland's largest cathedral, a beautiful example of Gothic architecture."
+(string)
+
+
+place image URL
+"https://www.stpatrickscathedral.ie/wp-content/uploads/2023/07/St-Patricks-Cathedral-Facade-Summer-Day-1024x683.jpg"
+(string)
+
+
+placeName
+"St. Patrick's Cathedral"
+(string)
+
+
+ticket pricing
+"€9 (approximately ₹810) per adult"
+(string)
+
+
+time to travel from Kilmainham Gaol
+"10-15 minutes (public transport or taxi)"
+(string)
+
+
+
+2
+(map)
+
+
+best time to visit
+"Afternoon"
+(string)
+
+
+duration
+"2-3 hours"
+(string)
+
+
+geo coordinates
+"53.3554, -6.3254"
+(string)
+
+
+place details
+"Enjoy a relaxing afternoon in one of Europe's largest urban parks, home to Dublin Zoo and Áras an Uachtaráin (President's Residence)."
+(string)
+
+
+place image URL
+"https://phoenixpark.ie/wp-content/uploads/2021/07/Screen-Shot-2021-07-01-at-15.41.39.png"
+(string)
+
+
+placeName
+"Phoenix Park"
+(string)
+
+
+ticket pricing
+"Free entry (Dublin Zoo entry fee applies separately)"
+(string)
+
+
+time to travel from St. Patrick's Cathedral
+"15-20 minutes (public transport or taxi)"
+(string)
+
+
+location
+"3Dental Dublin, Naas Road, Redcow, Dublin, Ireland"
+(string)
+
+
+notes
+"Prices are estimates and can vary. Booking in advance is recommended, especially for popular attractions like Kilmainham Gaol and the Book of Kells. Transportation: Consider using Dublin Bus, the LUAS tram, or taxis to get around. A Leap Visitor Card can be a cost-effective option for public transport. Food: Dublin offers a wide range of dining options to suit various budgets. Look for pubs and casual restaurants for affordable meals. Indian restaurants are also available."
+(string)
+
+
+travelers
+"3-5"
+(string)
+
+
+userEmail
+"prashantsingh9452180588@gmail.com"
+(string)
+
+
+
+userSelection
+(map)
+
+
+NumberOfDays
+2
+(number)
+
+
+budget
+"Moderate"
+(string)
+
+
+
+location
+(map)
+
+
+label
+"3Dental Dublin, Naas Road, Redcow, Dublin, Ireland"
+(string)
+
+
+
+value
+(map)
+
+
+description
+"3Dental Dublin, Naas Road, Redcow, Dublin, Ireland"
+(string)
+
+
+
+matched_substrings
+(array)
+
+
+
+0
+(map)
+
+
+length
+2
+(number)
+
+
+offset
+0
+(number)
+
+
+place_id
+"ChIJTXYkP7AMZ0gRVrEQhRie6vA"
+(string)
+
+
+reference
+"ChIJTXYkP7AMZ0gRVrEQhRie6vA"
+(string)
+
+
+
+structured_formatting
+(map)
+
+
+main_text
+"3Dental Dublin"
+(string)
+
+
+
+main_text_matched_substrings
+(array)
+
+
+
+0
+(map)
+
+
+length
+2
+(number)
+
+
+offset
+0
+(number)
+
+
+secondary_text
+"Naas Road, Redcow, Dublin, Ireland"
+(string)
+
+
+
+terms
+(array)
+
+
+
+0
+(map)
+
+
+offset
+0
+(number)
+
+
+value
+"3Dental Dublin"
+(string)
+
+
+
+1
+(map)
+
+
+offset
+16
+(number)
+
+
+value
+"Naas Road"
+(string)
+
+
+
+2
+(map)
+
+
+offset
+27
+(number)
+
+
+value
+"Redcow"
+(string)
+
+
+
+3
+(map)
+
+
+offset
+35
+(number)
+
+
+value
+"Dublin"
+(string)
+
+
+
+4
+(map)
+
+
+offset
+43
+(number)
+
+
+value
+"Ireland"
+(string)
+
+
+
+types
+(array)
+
+
+0
+"establishment"
+(string)
+
+
+1
+"point_of_interest"
+(string)
+
+
+2
+"health"
+(string)
+
+
+3
+"dentist"
+(string)
+
+
+travelers
+"3 to 5 People"
