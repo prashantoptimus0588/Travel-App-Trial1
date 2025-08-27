@@ -13,8 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-// import { ChatSession } from '@google/generative-ai';
-import { FaGoogle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
@@ -56,13 +54,12 @@ function CreateTrip() {
 
 
   const OnGenerateTrip = async() => {
-    const { NumberOfDays, location, budget, travelers } = formData || {};  //Form Destructuring
+    const { NumberOfDays, location, budget, travelers } = formData || {}; 
   
     const user=localStorage.getItem('user');
 
     if(!user){
       setOpenDialog(true)
-      
     }
 
     if (!location || !budget || !travelers || NumberOfDays == null) {
@@ -79,18 +76,6 @@ function CreateTrip() {
     console.log(formData);
     
     
-    
-  
-    
-    
-    
-    
-    // console.log("Form Data:", formData);
-    // console.log("Location:", formData?.location?.label);
-    // console.log("Budget:", formData?.budget);
-    // console.log("Travelers:", formData?.travelers);
-    // console.log("Prompt:", FINAL_PROMPT);
-
     setLoading(true);
     const FINAL_PROMPT = `Generate Travel Plan for Location: ${formData?.location?.label || 'Unknown Location'} for ${formData?.NumberOfDays || 'X'} Days for ${formData?.travelers || 'Y'} with a ${formData?.budget || 'Z'} budget. Give me a list of hotel options with HotelName at least 4, Hotel address, Price in INR, hotel image URL,,booking link, geo coordinates, rating, descriptions. Also suggest an itinerary with placeName, place details, place image URL, geo coordinates, ticket pricing, time to travel to each location, and best time to visit — all in JSON format.
     Keep all in strict JSON and keys also like this
@@ -151,8 +136,6 @@ Rules:
     const user=JSON.parse(localStorage.getItem('user'));
     const docId=Date.now().toString();
     const cleanedData = TripData.replace(/^```json\s*|\s*```$/g, '');
-    // data was like ```json so i removed all the backticks and whitespaces
-    //This is a regular expression (regex) used with .replace() to strip the markdown formatting from the string returned by the AI model.
     
     await setDoc(doc(db, "AiGeneratedTrips", docId), {
       userSelection:formData,
@@ -181,60 +164,62 @@ Rules:
   }
 
   return (
-    <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10'>
+    <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen'>
       
-        <h2 className='font-bold text-3xl'>
-          Tell us your travel preferences🌴
+      <div className='bg-white p-8 rounded-2xl shadow-xl'>
+        <h2 className='font-extrabold text-4xl text-gray-800 tracking-wide'>
+          Plan your adventure 🌍🌴
         </h2>
 
-        <p className='mt-3 text-gray-500 text-xl'>Just provide some basic information, and our trip planner will generate a customized itinerary based on your preferences.
+        <p className='mt-4 text-gray-600 text-lg'>Just provide some basic information, and our AI trip planner will generate a customized itinerary based on your preferences.
         </p>
 
-        <div className='mt-20 flex flex-col gap-10'>  
+        <div className='mt-12 flex flex-col gap-10'>
             <div>
-              <h2 className='text-xl my-3 font-medium'>What's your Destination?</h2>
+              <h2 className='text-xl my-3 font-semibold text-gray-700'>What's your Destination?</h2>
               <GooglePlacesAutocomplete
                 apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
                 selectProps={{
                   placeholder:"Search Location",
                   value:place,
-                  onChange:(e)=>{setPlace(e);handleInputChange('location',e)}
+                  onChange:(e)=>{setPlace(e);handleInputChange('location',e)},
+                  className: 'w-full rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500',
                 }}
               />
             </div>
 
             <div>
-              <h2 className='text-xl my-3 font-medium'>How many Days are you planning your trip</h2>
+              <h2 className='text-xl my-3 font-semibold text-gray-700'>How many days are you planning your trip?</h2>
                 <Input 
-                  className='w-full px-3 py-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
-                  placeholder={'Ex.3,4,5'} 
+                  className='w-full px-4 py-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300'
+                  placeholder={'Ex. 3, 4, 5'} 
                   type="number"
                   onChange={(e)=>handleInputChange('NumberOfDays',Number(e))}
                 />
             </div>
 
             <div>
-              <h2 className='text-xl my-3 font-medium'>What is your budget?</h2>
-              <div className='grid grid-cols-3 gap-5 mt-5'>
+              <h2 className='text-xl my-3 font-semibold text-gray-700'>What is your budget?</h2>
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-5'>
                 {SelectBudgetOptions.map((item,index)=>(
                     <div key={index} 
-                      className={`p-4 border border-gray-300 rounded-lg hover:shadow-lg ${formData?.budget==item.title&&'shadow-lg border-green-600'}`}
+                      className={`p-6 border-2 border-transparent rounded-xl cursor-pointer transition-all duration-300 hover:shadow-lg ${formData?.budget==item.title?'border-purple-600 bg-purple-50 shadow-md':'bg-gray-100'}`}
                       onClick={()=>handleInputChange('budget',item.title)}>
                       <h2 className='text-4xl'>{item.icon}</h2>
-                      <h2 className='font-bold text-lg'>{item.title}</h2>
+                      <h2 className='font-bold text-lg mt-2 text-gray-800'>{item.title}</h2>
                       <h2 className='text-sm text-gray-500'>{item.desc}</h2>
                     </div>
                 ))}
               </div>
 
-              <h2 className='text-xl my-3 font-medium'>Who do you plan on travelling with on your next adventure?</h2>
-              <div className='grid grid-cols-3 gap-5 mt-5'>
+              <h2 className='text-xl my-3 font-semibold text-gray-700 mt-10'>Who do you plan on travelling with on your next adventure?</h2>
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-5'>
                 {SelectTravelersList.map((item,index)=>(
                     <div key={index} 
-                      className={`p-4 border border-gray-300 rounded-lg hover:shadow-lg ${formData?.travelers==item.people&&'shadow-lg border-green-600'}`}
+                      className={`p-6 border-2 border-transparent rounded-xl cursor-pointer transition-all duration-300 hover:shadow-lg ${formData?.travelers==item.people?'border-indigo-600 bg-indigo-50 shadow-md':'bg-gray-100'}`}
                       onClick={()=>handleInputChange('travelers',item.people)}>
                       <h2 className='text-4xl'>{item.icon}</h2>
-                      <h2 className='font-bold text-lg'>{item.title}</h2>
+                      <h2 className='font-bold text-lg mt-2 text-gray-800'>{item.title}</h2>
                       <h2 className='text-sm text-gray-500'>{item.desc}</h2>
                     </div>
                 ))}
@@ -243,26 +228,26 @@ Rules:
         </div>
         <div className='my-10 justify-end flex'>
           <Button
+            className='bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105'
             disabled={loading}
             onClick={OnGenerateTrip}>
               {
-                loading?
-                <CgSearchLoading className='h-7 w-7 animate-spin'/>:'Generate Trip'
+                loading ?
+                <CgSearchLoading className='h-7 w-7 animate-spin'/> : 'Generate Trip'
               }
           </Button>
 
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogContent>
+            <DialogContent className="bg-white rounded-lg shadow-xl p-6">
               <DialogHeader>
-                
                 <DialogDescription>
                   <img src="/logo.svg" alt="" 
-                    className='max-w-50'/>
-                  <h2 className='font-bold text-lg mt-7'>Sign In with Google</h2>
-                  <p>Sign in to the app with Google Authentication securely</p>
+                    className='max-w-50 mx-auto'/>
+                  <h2 className='font-bold text-2xl text-gray-800 mt-7 text-center'>Sign In with Google</h2>
+                  <p className='text-gray-600 mt-2 text-center'>Sign in to the app with Google Authentication securely</p>
                   <Button 
                     onClick={login}
-                    className='w-full mt-5 flex gap-4 items-center justify-center'>
+                    className='w-full mt-5 flex gap-4 items-center justify-center bg-blue-500 text-white rounded-full py-3 hover:bg-blue-600 transition-colors'>
                     <FcGoogle className='h-7 w-7'/>
                     Sign In with Google
                   </Button>
@@ -271,8 +256,10 @@ Rules:
             </DialogContent>
           </Dialog>
         </div>
+      </div>
     </div>
   )
 }
+
 
 export default CreateTrip;
