@@ -53,81 +53,103 @@ const Header = () => {
   }
 
   return (
-    <div className="p-4 shadow-lg flex justify-between items-center bg-gradient-to-r from-blue-600 to-purple-700 text-white rounded-b-xl">
-      <img src="/logo.svg" alt="TravelGenie logo" className="h-10 w-auto md:h-12" />
-      <div className="flex items-center gap-4 md:gap-6"> {/* Responsive gap */}
-        {user ?
-          <> {/* Use Fragment for multiple elements */}
-            <a href="/create-trip">
-              <Button 
-                variant="outline" 
-                className="rounded-full bg-white text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 text-sm md:text-base px-3 py-1 md:px-4 md:py-2 shadow-md hover:shadow-lg"
-              >
-                +Create Trip
-              </Button>
-            </a>
-            
-            <a href="/my-trips">
-              <Button 
-                variant="outline" 
-                className="rounded-full bg-white text-purple-600 hover:bg-purple-50 hover:text-purple-700 transition-all duration-200 text-sm md:text-base px-3 py-1 md:px-4 md:py-2 shadow-md hover:shadow-lg"
-              >
-                My Trips
-              </Button>
-            </a>
+      <div className="p-4 shadow-lg flex justify-between items-center bg-gradient-to-r from-blue-600 to-purple-700 text-white rounded-b-xl">
+    {/* Logo */}
+    <a href="/" className="flex items-center gap-2">
+      <img src="/logo.svg" alt="TravelGenie logo" className="h-8 w-auto md:h-10" />
+    </a>
 
-            <Popover>
-              <PopoverTrigger>
-                <img 
-                  src={user?.picture} 
-                  className="h-9 w-9 rounded-full object-cover cursor-pointer border-2 border-white shadow-md hover:scale-105 transition-transform duration-200"
+    {/* Actions */}
+    <div className="flex items-center gap-3 md:gap-6">
+      {user ? (
+        <>
+          {/* Create Trip */}
+          <a href="/create-trip">
+            <Button className="rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 text-sm md:text-base px-3 py-1.5 md:px-4 md:py-2 shadow-lg flex items-center gap-2">
+              <span className="text-lg">➕</span>
+              <span className="hidden sm:inline">Create Trip</span>
+            </Button>
+          </a>
+
+          {/* My Trips */}
+          <a href="/my-trips">
+            <Button className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all duration-200 text-sm md:text-base px-3 py-1.5 md:px-4 md:py-2 shadow-lg flex items-center gap-2">
+              📂 <span className="hidden sm:inline">My Trips</span>
+            </Button>
+          </a>
+
+          {/* User Profile */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <img
+                src={user?.picture}
+                alt="User Profile"
+                className="h-10 w-10 md:h-11 md:w-11 rounded-full object-cover border-2 border-white shadow-md 
+                          hover:ring-2 hover:ring-white/70 hover:scale-105 transition-all duration-200 cursor-pointer"
+              />
+            </PopoverTrigger>
+
+            <PopoverContent className="bg-white p-4 rounded-xl shadow-2xl text-gray-800 w-64">
+              <div className="flex items-center gap-3 border-b pb-3 mb-3">
+                <img
+                  src={user?.picture}
+                  className="h-12 w-12 rounded-full object-cover"
                   alt="User Profile"
                 />
-              </PopoverTrigger>
-              <PopoverContent className="bg-white p-3 rounded-lg shadow-xl text-gray-800">
-                <h2 
-                  onClick={()=>{
-                    googleLogout();
-                    localStorage.clear();
-                    window.location.reload();
-                  }}
-                  className="cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors duration-150 text-center font-medium"
-                >
-                  Log Out
-                </h2>
-              </PopoverContent>
-            </Popover>
-          </> 
-          : 
-          <Button 
-            onClick={()=>setOpenDialog(true)} 
-            className="bg-white text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-semibold py-2 px-5 rounded-full shadow-md hover:shadow-lg transition-all duration-200"
-          >
-            Sign In
-          </Button>
-        }
+                <div>
+                  <h3 className="font-semibold text-sm">{user?.name}</h3>
+                  <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  googleLogout();
+                  localStorage.clear();
+                  window.location.reload();
+                }}
+                className="w-full text-center bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition-colors"
+              >
+                Log Out
+              </button>
+            </PopoverContent>
+          </Popover>
 
-        {/* Dialog for Sign In */}
-        <Dialog open={openDialog} onOpenChange={setOpenDialog}> {/* Added onOpenChange for better control */}
-          <DialogContent className="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-auto">
-            <DialogHeader>
-              <DialogDescription>
-                <img src="/logo.svg" alt="TravelGenie Logo" 
-                  className='max-w-40 mx-auto mb-6'/> {/* Adjusted max-w and added mb */}
-                <h2 className='font-bold text-2xl text-gray-800 mt-7 text-center'>Sign In with Google</h2>
-                <p className='text-gray-600 mt-2 text-center'>Sign in to the app with Google Authentication securely</p>
-                <Button 
-                  onClick={login}
-                  className='w-full mt-5 flex gap-4 items-center justify-center bg-blue-600 text-white rounded-full py-3 hover:bg-blue-700 transition-colors shadow-md'>
-                  <FcGoogle className='h-7 w-7'/>
-                  Sign In with Google
-                </Button>
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-      </div>
+        </>
+      ) : (
+        
+        <Button
+          onClick={() => setOpenDialog(true)}
+          className="bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-2 px-6 rounded-2xl shadow-md hover:shadow-lg hover:brightness-110 transition-all duration-300 ease-in-out transform hover:scale-105"
+        >
+          Sign In
+        </Button>
+
+      )}
+
+      {/* Sign-In Dialog */}
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent className="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-auto">
+          <DialogHeader>
+            <DialogDescription>
+              <img src="/logo.svg" alt="TravelGenie Logo" className="max-w-40 mx-auto mb-6" />
+              <h2 className="font-bold text-2xl text-gray-800 mt-7 text-center">Sign In with Google</h2>
+              <p className="text-gray-600 mt-2 text-center">
+                Sign in to the app with Google Authentication securely
+              </p>
+              <Button
+                onClick={login}
+                className="w-full mt-5 flex gap-4 items-center justify-center bg-blue-600 text-white rounded-full py-3 hover:bg-blue-700 transition-colors shadow-md"
+              >
+                <FcGoogle className="h-7 w-7" />
+                Sign In with Google
+              </Button>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
+  </div>
+
   );
 };
 
