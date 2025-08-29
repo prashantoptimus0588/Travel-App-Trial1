@@ -17,7 +17,7 @@ const Hero = () => {
         </Button>
       </Link>
       <img 
-        src="/timeToTravel.png" 
+        src="/beach.jpg" 
         alt="Time to Travel" 
         className='mt-12 w-full max-w-4xl rounded-3xl shadow-2xl transition-transform duration-500 hover:scale-[1.02] object-cover h-auto'
       />
