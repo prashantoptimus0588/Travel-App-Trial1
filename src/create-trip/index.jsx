@@ -4,7 +4,7 @@ import Input from '../components/ui/custom/Input';
 import { SelectBudgetOptions, SelectTravelersList } from '@/constants/options';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
-import { generateTravelPlan } from '@/service/AI Model';
+import { generateTravelPlan } from '@/service/api-service'; // ✅ UNCOMMENTED
 import {
   Dialog,
   DialogContent,
@@ -20,6 +20,7 @@ import { doc,setDoc } from 'firebase/firestore';
 import { db } from '@/service/firebaseConfig';
 import { CgSearchLoading } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom';
+
 
 
 function CreateTrip() {
@@ -53,13 +54,15 @@ function CreateTrip() {
   })
 
 
+  // ✅ IMPROVED: Optimized OnGenerateTrip function with better error handling
   const OnGenerateTrip = async() => {
     const { NumberOfDays, location, budget, travelers } = formData || {}; 
-  
-    const user=localStorage.getItem('user');
 
-    if(!user){
-      setOpenDialog(true)
+    const user = localStorage.getItem('user');
+
+    if (!user) {
+      setOpenDialog(true);
+      return;
     }
 
     if (!location || !budget || !travelers || NumberOfDays == null) {
@@ -73,13 +76,14 @@ function CreateTrip() {
     }
 
     toast.success("Please wait while we are generating your trip!✈️");
-    console.log(formData);
-    
-    
     setLoading(true);
-    const FINAL_PROMPT = `Generate Travel Plan for Location: ${formData?.location?.label || 'Unknown Location'} for ${formData?.NumberOfDays || 'X'} Days for ${formData?.travelers || 'Y'} with a ${formData?.budget || 'Z'} budget. Give me a list of hotel options with HotelName at least 4, Hotel address, Price in INR, hotel image URL,,booking link, geo coordinates, rating, descriptions. Also suggest an itinerary with placeName, place details, place image URL, geo coordinates, ticket pricing, time to travel to each location, and best time to visit — all in JSON format.
-    Keep all in strict JSON and keys also like this
-    {
+
+    // ✅ OPTIMIZED PROMPT - Shorter, clearer, saves tokens
+    const FINAL_PROMPT = `Create a ${NumberOfDays}-day travel plan for ${location?.label} for ${travelers} with ${budget} budget.
+
+Return ONLY valid JSON with this exact structure (no markdown, no extra text):
+
+{
   "hotels": [
     {
       "hotelName": "string",
@@ -104,48 +108,90 @@ function CreateTrip() {
         "bestTimeToVisit": "string",
         "duration": "string"
       }
-    ],
-    ...
+    ]
   },
-  "currencyDisclaimer": "string",
-  "notes": "string",
-  "location": "string",
-  "budget": "string",
-  "travelers": "string",
-  "duration": "string"
+  "location": "${location?.label}",
+  "budget": "${budget}",
+  "travelers": "${travelers}",
+  "duration": "${NumberOfDays} days"
 }
 
-Rules:
-- Always use **camelCase** for all keys (e.g. hotelOptions, placeName, bestTimeToVisit).
-- Do NOT change the key names (e.g. do not use hotels or hotelsAvailable).
-- Output must be valid, parseable **JSON only** — no markdown or extra text.
-    `;
-    console.log(FINAL_PROMPT)
-    const aiResponse=await generateTravelPlan(FINAL_PROMPT);
-    
-    console.log(aiResponse);
-    setLoading(false);
-    await SaveAiTrip(aiResponse)
+Include 4+ hotels and ${NumberOfDays} days in itinerary (day1, day2, etc.). Use camelCase for all keys.`;
 
-    // const result=await ChatSession.sendMessage(FINAL_PROMPT);
-    
+    try {
+      const aiResponse = await generateTravelPlan(FINAL_PROMPT);
+      console.log("✅ AI Response received:", aiResponse);
+      setLoading(false);
+      await SaveAiTrip(aiResponse);
+    } catch (error) {
+      setLoading(false);
+      console.error("❌ Trip generation error:", error);
+      
+      // Better error handling
+      if (error.message?.includes('Too many requests')) {
+        toast.error("API rate limit reached. Please wait 1 minute and try again.");
+      } else if (error.message?.includes('API key')) {
+        toast.error("Invalid API key. Please check your .env file.");
+      } else {
+        toast.error(error.message || "Failed to generate trip. Please try again.");
+      }
+    }
   };
 
-  const SaveAiTrip= async (TripData)=>{
+  // ✅ IMPROVED: Better SaveAiTrip function with validation
+  const SaveAiTrip = async (TripData) => {
     setLoading(true);
-    const user=JSON.parse(localStorage.getItem('user'));
-    const docId=Date.now().toString();
-    const cleanedData = TripData.replace(/^```json\s*|\s*```$/g, '');
     
-    await setDoc(doc(db, "AiGeneratedTrips", docId), {
-      userSelection:formData,
-      tripData:JSON.parse(cleanedData),
-      userEmail:user?.email,
-      id:docId
-    })
-    setLoading(false);
-    navigate('/view-trip/'+docId)
-  }
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const docId = Date.now().toString();
+      
+      // Parse and validate JSON
+      let parsedData;
+      try {
+        parsedData = JSON.parse(TripData);
+      } catch (parseError) {
+        console.error('❌ JSON Parse Error:', parseError);
+        console.log('Raw data:', TripData);
+        
+        toast.error('Invalid response format. Please try again.');
+        setLoading(false);
+        return;
+      }
+      
+      // Validate required fields
+      if (!parsedData.hotels || !parsedData.itinerary) {
+        toast.error('Incomplete trip data received. Please try again.');
+        setLoading(false);
+        return;
+      }
+      
+      console.log("💾 Saving to Firebase...", parsedData);
+      
+      // Save to Firestore
+      await setDoc(doc(db, "AiGeneratedTrips", docId), {
+        userSelection: formData,
+        tripData: parsedData,
+        userEmail: user?.email,
+        id: docId,
+        createdAt: new Date().toISOString()
+      });
+      
+      setLoading(false);
+      toast.success('Trip saved successfully! 🎉');
+      navigate('/view-trip/' + docId);
+      
+    } catch (error) {
+      console.error('❌ Save Error:', error);
+      setLoading(false);
+      
+      if (error.code === 'permission-denied') {
+        toast.error('Database permission denied. Check Firebase rules.');
+      } else {
+        toast.error('Failed to save trip. Please try again.');
+      }
+    }
+  };
 
 
   const GetUserProfile=async (tokenInfo)=>{
